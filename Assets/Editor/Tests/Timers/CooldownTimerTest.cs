@@ -15,6 +15,41 @@ public class CooldownTimerTest
     }
 
     [Test]
+    public void NonRecurringRestart()
+    {
+        _cooldownTimer.Start();
+        _cooldownTimer.Update(1);
+        
+        Assert.IsFalse(_cooldownTimer.IsActive);
+        Assert.IsFalse(_cooldownTimer.IsReccuring);
+        Assert.IsTrue(_cooldownTimer.Completed);
+        Assert.AreEqual(0, _cooldownTimer.TimeRemaining);
+        Assert.AreEqual(1, _cooldownTimer.TotalTime);
+        Assert.AreEqual(1, _cooldownTimer.TimeElapsed);
+        Assert.AreEqual(1, _cooldownTimer.TimesCounted);
+        
+        _cooldownTimer.Start(2);
+        
+        Assert.IsTrue(_cooldownTimer.IsActive);
+        Assert.IsFalse(_cooldownTimer.IsReccuring);
+        Assert.IsFalse(_cooldownTimer.Completed);
+        Assert.AreEqual(2, _cooldownTimer.TimeRemaining);
+        Assert.AreEqual(2, _cooldownTimer.TotalTime);
+        Assert.AreEqual(0, _cooldownTimer.TimeElapsed);
+        Assert.AreEqual(1, _cooldownTimer.TimesCounted);
+        
+        _cooldownTimer.Update(2);
+        
+        Assert.IsFalse(_cooldownTimer.IsActive);
+        Assert.IsFalse(_cooldownTimer.IsReccuring);
+        Assert.IsTrue(_cooldownTimer.Completed);
+        Assert.AreEqual(0, _cooldownTimer.TimeRemaining);
+        Assert.AreEqual(2, _cooldownTimer.TotalTime);
+        Assert.AreEqual(2, _cooldownTimer.TimeElapsed);
+        Assert.AreEqual(2, _cooldownTimer.TimesCounted);
+    }
+
+    [Test]
     public void NormalNonRecurringTest()
     {
         Assert.IsFalse(_cooldownTimer.IsActive);

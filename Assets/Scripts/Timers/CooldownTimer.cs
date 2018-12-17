@@ -80,8 +80,6 @@
                 TimeRemaining -= timeDelta;
                 if (TimeRemaining <= 0)
                 {
-                    if (TimerCompleteEvent != null) TimerCompleteEvent();
-                    TimesCounted++;
                     if (IsReccuring)
                     {
                         TimeRemaining = TotalTime;
@@ -90,6 +88,8 @@
                     {
                         IsActive = false;
                     }
+                    if (TimerCompleteEvent != null) TimerCompleteEvent();
+                    TimesCounted++;
                 }
             }
         }
